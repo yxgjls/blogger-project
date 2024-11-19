@@ -1,19 +1,24 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "server/api.js",
-            "use": "@vercel/node"
-        }
+      {
+        "src": "server/api.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "public/**/*",
+        "use": "@vercel/static"
+      }
     ],
     "routes": [
-        {
-            "src": "/api",
-            "dest": "server/api.js"
-        }
-    ],
-    "env": {
-        "BLOGGER_API_KEY": "@blogger_api_key",
-        "BLOGGER_BLOG_ID": "@blogger_blog_id"
-      }   
+      {
+        "src": "/api",
+        "dest": "server/api.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/public/$1"
+      }
+    ]
 }
+  
