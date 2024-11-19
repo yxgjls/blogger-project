@@ -11,5 +11,9 @@
             "src": "/api",
             "dest": "server/api.js"
         }
-    ]
+    ],
+    "env": {
+        "BLOGGER_API_KEY": "@blogger_api_key",
+        "BLOGGER_BLOG_ID": "@blogger_blog_id"
+      }   
 }
