@@ -4,17 +4,15 @@ dotenv.config(); // 加载 .env 文件中的环境变量
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-let cachedData = null; // 用于存储缓存数据
-let lastFetchTime = 0; // 缓存时间戳
 const CACHE_DURATION = 300000; // 5分钟缓存时间
+let cachedInfo = null; // 用于存储博客基本信息的缓存数据
+let lastFetchTimeInfo = 0; // 基本信息缓存时间戳
 
 export default async function handler(req, res) {
     const allowedOrigins = ['https://yxgjls.blogspot.com', 'https://blogger-project-vert.vercel.app'];
 
     // 获取请求的来源
     const origin = req.headers.origin;
-
-    // 检查来源是否被允许
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     } else {
@@ -25,7 +23,7 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-        return res.status(204).end(); // 直接返回空响应
+        return res.status(204).end();
     }
 
     // 仅允许 GET 方法
@@ -39,20 +37,41 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Missing API key or Blog ID' });
     }
 
-    // 检查缓存是否过期
-    if (cachedData && Date.now() - lastFetchTime < CACHE_DURATION) {
-        return res.status(200).json(cachedData); // 返回缓存数据
-    }
-
-    const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOGGER_BLOG_ID}/posts?key=${BLOGGER_API_KEY}`;
+    // 获取请求类型
+    const { type, pageToken } = req.query;
 
     try {
-        const response = await fetch(url);
-        cachedData = await response.json();
-        lastFetchTime = Date.now(); // 更新缓存时间
-        res.status(200).json(cachedData);
+        if (type === 'info') {
+            // 请求博客基本信息
+            if (cachedInfo && Date.now() - lastFetchTimeInfo < CACHE_DURATION) {
+                return res.status(200).json(cachedInfo); // 返回缓存数据
+            }
+
+            const url = `https://www.googleapis.com/blogger/v3/blogs/${BLOGGER_BLOG_ID}?key=${BLOGGER_API_KEY}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // 更新缓存
+            cachedInfo = data;
+            lastFetchTimeInfo = Date.now();
+
+            return res.status(200).json(data);
+        } else if (type === 'posts') {
+            // 请求博客文章列表
+            let url = `https://www.googleapis.com/blogger/v3/blogs/${BLOGGER_BLOG_ID}/posts?key=${BLOGGER_API_KEY}`;
+            if (pageToken) {
+                url += `&pageToken=${pageToken}`;
+            }
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            return res.status(200).json(data);
+        } else {
+            return res.status(400).json({ error: 'Invalid type parameter' });
+        }
     } catch (error) {
         console.error('Error fetching data:', error);
-        res.status(500).json({ error: 'Failed to fetch data' });
+        return res.status(500).json({ error: 'Failed to fetch data' });
     }
 }
