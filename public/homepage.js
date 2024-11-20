@@ -4,6 +4,11 @@ const API_BASE_URL = 'https://blogger-project-vert.vercel.app/api';
 // 延时函数
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// 创建包含文本的数组
+const texts = [
+    '日常打卡更新中&#8230;&#8230;<br/>英语系列更新中&#8230;&#8230;<br/>翻译系列更新中&#8230;&#8230;',
+  ];
+
 /**
  * 获取博客基本信息
  */
@@ -14,8 +19,17 @@ async function fetchBlogInfo() {
             throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        // 处理数据，例如更新页面内容
+        // 博文数量
         document.getElementById('post-count').textContent = data.posts.totalItems;
+
+        const times = calculateTime(data);
+        //最后更新时间
+        document.getElementById('last-update-time').textContent = times.updateTime;
+
+        //运行时间
+        document.getElementById('blog-run-time').textContent = times.runTime; 
+
+        document.getElementById('temp-load2').style.display = 'none';
     } catch (error) {
         console.error('Failed to fetch blog info:', error);
     }
@@ -113,9 +127,32 @@ function calculateStatistics(posts) {
     };
 }
 
+// 计算时间
+function calculateTime(posts) {
+    const blogStartDate = new Date('2024-11-10T00:00:00'); // 实际博客开始日期
+
+    const now = new Date();
+    const runTime = Math.floor((now - blogStartDate) / (1000 * 60 * 60 * 24));
+    const updateTime = Math.floor((now - posts.updated) / (1000 * 60 * 60 * 24));
+
+    return {
+        runTime,
+        updateTime
+    };
+}
+
+// 随机选择文本函数
+function displayRandomText() {
+    // 随机索引
+    const randomIndex = Math.floor(Math.random() * texts.length);
+    // 将随机选择的文本放入 div 中
+    document.getElementById('randomText').innerHTML = texts[randomIndex];
+}
+
 // 初始化加载
 document.addEventListener('DOMContentLoaded', () => {
     fetchBlogInfo();
+    displayRandomText();
 });
 
 // 调用示例
