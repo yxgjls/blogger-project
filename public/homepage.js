@@ -130,11 +130,10 @@ function calculateStatistics(posts) {
 // 计算时间
 function calculateTime(posts) {
     const blogStartDate = new Date('2024-11-10T00:00:00'); // 实际博客开始日期
-
+    const blogUpdateDate = new Date(posts.updated);
     const now = new Date();
     const runTime = Math.floor((now - blogStartDate) / (1000 * 60 * 60 * 24));
-    const updateTime = Math.floor((now - posts.updated) / (1000 * 60 * 60 * 24));
-
+    const updateTime = Math.floor((now - blogUpdateDate) / (1000 * 60 * 60 * 24));
     return {
         runTime,
         updateTime
