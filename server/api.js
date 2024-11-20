@@ -4,7 +4,7 @@ dotenv.config(); // 加载 .env 文件中的环境变量
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const allowedOrigins = ['https://https://yxgjls.blogspot.com/', 'https://https://blogger-project-vert.vercel.app'];
+const allowedOrigins = ['https://yxgjls.blogspot.com/', 'https://blogger-project-vert.vercel.app'];
 
 
 export default async function handler(req, res) {
