@@ -4,7 +4,22 @@ dotenv.config(); // 加载 .env 文件中的环境变量
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+const allowedOrigins = ['https://https://yxgjls.blogspot.com/', 'https://https://blogger-project-vert.vercel.app'];
+
+
 export default async function handler(req, res) {
+
+    const origin = req.headers.origin || req.headers.referer;
+
+    if (!allowedOrigins.some((allowed) => origin && origin.startsWith(allowed))) {
+        return res.status(403).json({ error: 'Forbidden: Invalid request origin' });
+    }
+
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method Not Allowed' });
+    }
+    
+
     const { BLOGGER_API_KEY, BLOGGER_BLOG_ID } = process.env;
 
     if (!BLOGGER_API_KEY || !BLOGGER_BLOG_ID) {
