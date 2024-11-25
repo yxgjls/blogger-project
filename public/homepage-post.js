@@ -217,14 +217,17 @@ function isSmallScreen() {
 
 document.addEventListener('DOMContentLoaded', function () {
     let isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+    const container = document.getElementById('category-list');
 
     function handleScreenWidthChange(event) {
         if (event.matches && !isSmallScreen) {
             // 切换到小屏幕
+            container.replaceChildren();
             fetchData();
             isSmallScreen = true;
         } else if (!event.matches && isSmallScreen) {
             // 切换到大屏幕
+            container.replaceChildren();
             fetchData();
             isSmallScreen = false;
         }
