@@ -147,7 +147,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             const isExpanded = sublist.style.display === 'block';
             sublist.style.display = isExpanded ? 'none' : 'block';
             //arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
-            iconElement.className = isExpanded ? 'fa-solid fa-angle-up' : 'fa-solid fa-angle-down';
+            iconElement.className = isExpanded ? 'fa-solid fa-angle-down' : 'fa-solid fa-angle-up';
 
 
         };
