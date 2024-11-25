@@ -126,15 +126,18 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         flexContainer.style.alignItems = 'center';
         flexContainer.style.justifyContent = 'space-between';
 
-        // 创建 箭头元素
-        const iconElement = document.createElement("i");
-        iconElement.classList.add("fa-solid", "fa-angle-down");
-        iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
-
         const arrowSpan = document.createElement('span');
-        //arrowSpan.textContent = '\u25BA\u00A0 ';
+        arrowSpan.textContent = '\u25BA\u00A0 ';
         arrowSpan.style.cursor = 'pointer';
         arrowSpan.style.fontFamily = 'Arial, sans-serif';
+
+        if (isSmallScreen()) {
+            // 创建 箭头元素
+            const iconElement = document.createElement("i");
+            iconElement.classList.add("fa-solid", "fa-angle-down");
+            iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
+            arrowSpan.textContent = '';
+        }
 
         const link = document.createElement('a');
         link.textContent = `${category} (${categories[category]._postCount})`;
@@ -146,10 +149,11 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         const toggleDisplay = function () {
             const isExpanded = sublist.style.display === 'block';
             sublist.style.display = isExpanded ? 'none' : 'block';
-            //arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
-            iconElement.className = isExpanded ? 'fa-solid fa-angle-down' : 'fa-solid fa-angle-up';
-
-
+            if (isSmallScreen()) {
+                iconElement.className = isExpanded ? 'fa-solid fa-angle-down' : 'fa-solid fa-angle-up';
+            } else {
+                arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
+            }
         };
 
         arrowSpan.onclick = toggleDisplay;
