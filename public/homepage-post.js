@@ -157,8 +157,8 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             }
         };
         flexContainer.onclick = toggleDisplay;
-        arrowSpan.onclick = toggleDisplay;
-        link.onclick = toggleDisplay;
+        //arrowSpan.onclick = toggleDisplay;
+        //link.onclick = toggleDisplay;
 
         if (containsCurrentUrl(categories[category], currentPageUrl)) {
             sublist.style.display = 'block';
