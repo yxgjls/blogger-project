@@ -223,11 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.matches && !isSmallScreen) {
             // 切换到小屏幕
             container.replaceChildren();
+            document.getElementById('temp-load').style.display = 'block';
             fetchData();
             isSmallScreen = true;
         } else if (!event.matches && isSmallScreen) {
             // 切换到大屏幕
             container.replaceChildren();
+            document.getElementById('temp-load').style.display = 'block';
             fetchData();
             isSmallScreen = false;
         }
