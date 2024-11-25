@@ -93,23 +93,23 @@ function generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber)
 
     if (previousPost) {
         prevButton.classList.add('visible');
-        
+
         prevButton.href = previousPost.url;
-       
+
         prevButton.title = `上一篇:${previousPost.title}`;
     } else {
         prevButton.classList.remove('visible');
-        
+
     }
 
     if (nextPost) {
         nextButton.classList.add('visible');
-        
+
         nextButton.href = nextPost.url;
         nextButton.title = `下一篇:${nextPost.title}`;
     } else {
         nextButton.classList.remove('visible');
-        
+
     }
 }
 
@@ -119,35 +119,38 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
 
         const li = document.createElement('li');
         li.style.listStyleType = 'none';
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.justifyContent = 'space-between';
+        li.style.cursor = 'pointer';
 
-        const arrowSpan = document.createElement('span');
-        arrowSpan.textContent = '\u25BA\u00A0 ';
-        arrowSpan.style.cursor = 'pointer';
-        arrowSpan.style.fontFamily = 'Arial, sans-serif';
-
-        const link = document.createElement('a');
+        const link = document.createElement('span'); // 标题
         link.textContent = `${category} (${categories[category]._postCount})`;
-        link.style.cursor = 'pointer';
+
+        const arrowSpan = document.createElement('span'); // 箭头
+        arrowSpan.textContent = '\u25BC'; // 默认向下箭头
+        arrowSpan.style.transition = 'transform 0.2s'; // 平滑翻转效果
 
         const sublist = document.createElement('ul');
         sublist.style.display = 'none';
+        sublist.style.marginLeft = '20px'; // 内缩显示子目录
 
         const toggleDisplay = function () {
             const isExpanded = sublist.style.display === 'block';
             sublist.style.display = isExpanded ? 'none' : 'block';
-            arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
+            arrowSpan.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)'; // 翻转箭头
         };
 
-        arrowSpan.onclick = toggleDisplay;
-        link.onclick = toggleDisplay;
+        li.onclick = toggleDisplay; // 整行点击事件
 
+        // 自动展开当前文章所在的目录
         if (containsCurrentUrl(categories[category], currentPageUrl)) {
             sublist.style.display = 'block';
-            arrowSpan.textContent = '\u25BC\u00A0 ';
+            arrowSpan.style.transform = 'rotate(180deg)';
         }
 
-        li.appendChild(arrowSpan);
         li.appendChild(link);
+        li.appendChild(arrowSpan);
         li.appendChild(sublist);
 
         generateCategoryList(categories[category], currentPageUrl, sublist);
@@ -195,6 +198,6 @@ function expandParentElements(element) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     fetchData();
 });
