@@ -122,6 +122,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
 
         // 包裹标题和箭头的容器
         const flexContainer = document.createElement('div');
+        flexContainer.classList.add("arrow-link");
         flexContainer.style.display = 'flex';
         flexContainer.style.alignItems = 'center';
         flexContainer.style.justifyContent = 'space-between';
