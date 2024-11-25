@@ -93,23 +93,23 @@ function generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber)
 
     if (previousPost) {
         prevButton.classList.add('visible');
-        
+
         prevButton.href = previousPost.url;
-       
+
         prevButton.title = `上一篇:${previousPost.title}`;
     } else {
         prevButton.classList.remove('visible');
-        
+
     }
 
     if (nextPost) {
         nextButton.classList.add('visible');
-        
+
         nextButton.href = nextPost.url;
         nextButton.title = `下一篇:${nextPost.title}`;
     } else {
         nextButton.classList.remove('visible');
-        
+
     }
 }
 
@@ -119,6 +119,12 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
 
         const li = document.createElement('li');
         li.style.listStyleType = 'none';
+
+        // 包裹标题和箭头的容器
+        const flexContainer = document.createElement('div');
+        flexContainer.style.display = 'flex';
+        flexContainer.style.alignItems = 'center';
+        flexContainer.style.justifyContent = 'space-between';
 
         const arrowSpan = document.createElement('span');
         arrowSpan.textContent = '\u25BA\u00A0 ';
@@ -146,8 +152,9 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             arrowSpan.textContent = '\u25BC\u00A0 ';
         }
 
-        li.appendChild(arrowSpan);
-        li.appendChild(link);
+        flexContainer.appendChild(arrowSpan);
+        flexContainer.appendChild(link);
+        li.appendChild(flexContainer);
         li.appendChild(sublist);
 
         generateCategoryList(categories[category], currentPageUrl, sublist);
@@ -195,6 +202,6 @@ function expandParentElements(element) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     fetchData();
 });
