@@ -126,8 +126,13 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         flexContainer.style.alignItems = 'center';
         flexContainer.style.justifyContent = 'space-between';
 
+        // 创建 箭头元素
+        const iconElement = document.createElement("i");
+        iconElement.classList.add("fa-solid", "fa-angle-down");
+        iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
+
         const arrowSpan = document.createElement('span');
-        arrowSpan.textContent = '\u25BA\u00A0 ';
+        //arrowSpan.textContent = '\u25BA\u00A0 ';
         arrowSpan.style.cursor = 'pointer';
         arrowSpan.style.fontFamily = 'Arial, sans-serif';
 
@@ -141,7 +146,10 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         const toggleDisplay = function () {
             const isExpanded = sublist.style.display === 'block';
             sublist.style.display = isExpanded ? 'none' : 'block';
-            arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
+            //arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
+            iconElement.className = isExpanded ? 'fa-solid fa-angle-up' : 'fa-solid fa-angle-down';
+
+
         };
 
         arrowSpan.onclick = toggleDisplay;
@@ -153,11 +161,13 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         }
 
         if (isSmallScreen()) {
+            arrowSpan.appendChild(iconElement);
             flexContainer.appendChild(link);
             flexContainer.appendChild(arrowSpan);
             li.appendChild(flexContainer);
             li.appendChild(sublist);
         } else {
+            arrowSpan.appendChild(iconElement);
             li.appendChild(arrowSpan);
             li.appendChild(link);
             li.appendChild(sublist);
