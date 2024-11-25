@@ -119,14 +119,10 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
 
         const li = document.createElement('li');
         li.style.listStyleType = 'none';
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.justifyContent = 'space-between';
         li.style.cursor = 'pointer';
-
-        // 包裹标题和箭头的容器
-        const flexContainer = document.createElement('div');
-        flexContainer.style.display = 'flex';
-        flexContainer.style.alignItems = 'center';
-        flexContainer.style.justifyContent = 'space-between';
-        flexContainer.style.padding = '5px'; // 可选：调整行间距和视觉效果
 
         const link = document.createElement('span'); // 标题
         link.textContent = `${category} (${categories[category]._postCount})`;
@@ -145,8 +141,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             arrowSpan.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)'; // 翻转箭头
         };
 
-        // 整行点击事件绑定到 flexContainer
-        flexContainer.onclick = toggleDisplay;
+        li.onclick = toggleDisplay; // 整行点击事件
 
         // 自动展开当前文章所在的目录
         if (containsCurrentUrl(categories[category], currentPageUrl)) {
@@ -154,16 +149,12 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             arrowSpan.style.transform = 'rotate(180deg)';
         }
 
-        // 构建 li 的子元素
-        flexContainer.appendChild(link);
-        flexContainer.appendChild(arrowSpan);
-        li.appendChild(flexContainer); // flexContainer 放入 li 中
-        li.appendChild(sublist); // 子目录 ul 放在 flexContainer 之外
+        li.appendChild(link);
+        li.appendChild(arrowSpan);
+        li.appendChild(sublist);
 
-        // 递归生成子目录
         generateCategoryList(categories[category], currentPageUrl, sublist);
 
-        // 将 li 添加到父元素
         parentElement.appendChild(li);
     }
 
@@ -186,7 +177,6 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         });
     }
 }
-
 
 function containsCurrentUrl(category, currentPageUrl) {
     if (category._posts) {
