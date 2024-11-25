@@ -156,9 +156,14 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
                 arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
             }
         };
-        flexContainer.onclick = toggleDisplay;
-        //arrowSpan.onclick = toggleDisplay;
-        //link.onclick = toggleDisplay;
+        if (isSmallScreen()) {
+            flexContainer.onclick = toggleDisplay;
+        } else {
+            arrowSpan.onclick = toggleDisplay;
+            link.onclick = toggleDisplay;
+        }
+
+
 
         if (containsCurrentUrl(categories[category], currentPageUrl)) {
             sublist.style.display = 'block';
