@@ -131,9 +131,9 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         arrowSpan.style.cursor = 'pointer';
         arrowSpan.style.fontFamily = 'Arial, sans-serif';
 
+        // 创建 箭头元素
+        const iconElement = document.createElement("i");
         if (isSmallScreen()) {
-            // 创建 箭头元素
-            const iconElement = document.createElement("i");
             iconElement.classList.add("fa-solid", "fa-angle-down");
             iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
             arrowSpan.textContent = '';
