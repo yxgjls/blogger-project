@@ -152,10 +152,17 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             arrowSpan.textContent = '\u25BC\u00A0 ';
         }
 
-        flexContainer.appendChild(arrowSpan);
-        flexContainer.appendChild(link);
-        li.appendChild(flexContainer);
-        li.appendChild(sublist);
+        if (isSmallScreen()) {
+            flexContainer.appendChild(link);
+            flexContainer.appendChild(arrowSpan);
+            li.appendChild(flexContainer);
+            li.appendChild(sublist);
+        } else {
+            li.appendChild(arrowSpan);
+            li.appendChild(link);
+            li.appendChild(sublist);
+        }
+
 
         generateCategoryList(categories[category], currentPageUrl, sublist);
 
@@ -198,10 +205,35 @@ function expandParentElements(element) {
         if (parentLi && parentLi.querySelector('span')) {
             parentLi.querySelector('span').textContent = '\u25BC\u00A0 ';
         }
+
         expandParentElements(parentLi);
     }
 }
 
+function isSmallScreen() {
+    return window.matchMedia('(max-width: 768px)').matches;
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
+    let isSmallScreen = window.matchMedia('(max-width: 768px)').matches;
+
+    function handleScreenWidthChange(event) {
+        if (event.matches && !isSmallScreen) {
+            // 切换到小屏幕
+            fetchData();
+            isSmallScreen = true;
+        } else if (!event.matches && isSmallScreen) {
+            // 切换到大屏幕
+            fetchData();
+            isSmallScreen = false;
+        }
+    }
+
+    // 设置媒体查询
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    // 添加监听器
+    mediaQuery.addEventListener('change', handleScreenWidthChange);
     fetchData();
 });
