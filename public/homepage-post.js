@@ -114,63 +114,40 @@ function generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber)
 }
 
 function generateCategoryList(categories, currentPageUrl, parentElement = document.getElementById('category-list')) {
-    const isMobile = window.innerWidth <= 768; // 假设768px以下为移动端
-
     for (const category in categories) {
         if (category === '_posts' || category === '_postCount') continue;
 
         const li = document.createElement('li');
         li.style.listStyleType = 'none';
 
+        const arrowSpan = document.createElement('span');
+        arrowSpan.textContent = '\u25BA\u00A0 ';
+        arrowSpan.style.cursor = 'pointer';
+        arrowSpan.style.fontFamily = 'Arial, sans-serif';
+
         const link = document.createElement('a');
         link.textContent = `${category} (${categories[category]._postCount})`;
-
-        const arrowSpan = document.createElement('span');
-        arrowSpan.textContent = '\u25BA\u00A0 '; // 默认向右箭头
+        link.style.cursor = 'pointer';
 
         const sublist = document.createElement('ul');
         sublist.style.display = 'none';
 
-        if (isMobile) {
-            // 移动端布局
-            li.style.display = 'flex';
-            li.style.justifyContent = 'space-between';
-            li.style.alignItems = 'center';
-            li.style.cursor = 'pointer';
-            arrowSpan.textContent = '\u25BC'; // 默认向下箭头
-            arrowSpan.style.transition = 'transform 0.3s';
+        const toggleDisplay = function () {
+            const isExpanded = sublist.style.display === 'block';
+            sublist.style.display = isExpanded ? 'none' : 'block';
+            arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
+        };
 
-            const toggleDisplay = function () {
-                const isExpanded = sublist.style.display === 'block';
-                sublist.style.display = isExpanded ? 'none' : 'block';
-                arrowSpan.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
-            };
+        arrowSpan.onclick = toggleDisplay;
+        link.onclick = toggleDisplay;
 
-            li.onclick = toggleDisplay;
-
-            if (containsCurrentUrl(categories[category], currentPageUrl)) {
-                sublist.style.display = 'block';
-                arrowSpan.style.transform = 'rotate(180deg)';
-            }
-        } else {
-            // 桌面端逻辑保持不变
-            const toggleDisplay = function () {
-                const isExpanded = sublist.style.display === 'block';
-                sublist.style.display = isExpanded ? 'none' : 'block';
-                arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
-            };
-
-            arrowSpan.onclick = toggleDisplay;
-            link.onclick = toggleDisplay;
-
-            if (containsCurrentUrl(categories[category], currentPageUrl)) {
-                sublist.style.display = 'block';
-                arrowSpan.textContent = '\u25BC\u00A0 ';
-            }
+        if (containsCurrentUrl(categories[category], currentPageUrl)) {
+            sublist.style.display = 'block';
+            arrowSpan.textContent = '\u25BC\u00A0 ';
         }
 
-        li.appendChild(link);
         li.appendChild(arrowSpan);
+        li.appendChild(link);
         li.appendChild(sublist);
 
         generateCategoryList(categories[category], currentPageUrl, sublist);
@@ -197,7 +174,6 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         });
     }
 }
-
 
 function containsCurrentUrl(category, currentPageUrl) {
     if (category._posts) {
