@@ -135,7 +135,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         // 创建 箭头元素
         const iconElement = document.createElement("i");
         if (isSmallScreen()) {
-            iconElement.classList.add("fa-solid", "fa-angle-down");
+            iconElement.classList.add("fa-solid", "fa-angle-down", "fa-fw");
             iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
             arrowSpan.textContent = '';
         }
@@ -151,7 +151,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             const isExpanded = sublist.style.display === 'block';
             sublist.style.display = isExpanded ? 'none' : 'block';
             if (isSmallScreen()) {
-                iconElement.className = isExpanded ? 'fa-solid fa-angle-down' : 'fa-solid fa-angle-up';
+                iconElement.className = isExpanded ? 'fa-solid fa-angle-down fa-fw' : 'fa-solid fa-angle-up fa-fw';
             } else {
                 arrowSpan.textContent = isExpanded ? '\u25BA\u00A0 ' : '\u25BC\u00A0 ';
             }
