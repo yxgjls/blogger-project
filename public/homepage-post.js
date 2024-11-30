@@ -231,12 +231,12 @@ function expandParentElements(element) {
 }
 
 function isSmallScreen() {
-    return window.matchMedia('(max-width: 1024px)').matches;
+    return window.matchMedia('(max-width: 1280px)').matches;
 }
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    let isSmallScreen = window.matchMedia('(max-width: 1024px)').matches;
+    let isSmallScreen = window.matchMedia('(max-width: 1280px)').matches;
     const container = document.getElementById('category-list');
 
     function handleScreenWidthChange(event) {
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // 设置媒体查询
-    const mediaQuery = window.matchMedia('(max-width: 1024px)');
+    const mediaQuery = window.matchMedia('(max-width: 1280px)');
 
     // 添加监听器
     mediaQuery.addEventListener('change', handleScreenWidthChange);
