@@ -85,8 +85,9 @@ function setupFontModal() {
     }
     function showModal(modalElement) {
         const targetRect = settingsButton.getBoundingClientRect();
-        const targetRight = targetRect.right;  // 目标元素的右边缘位置
-        fontModalContent.style.left = `${targetRight}px`;  // 将 fixed 元素的左侧设置为目标元素右侧
+        const targetLeft = targetRect.left;  // 目标元素的左边缘位置
+
+        fontModalContent.style.left = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
         modalElement.style.display = 'block';
     }
     function closeModal(modalElement) {
