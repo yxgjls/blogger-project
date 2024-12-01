@@ -87,7 +87,7 @@ function setupFontModal() {
         const targetRect = settingsButton.getBoundingClientRect();
         const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
-        fontModalContent.style.left = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
+        fontModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
         modalElement.style.display = 'block';
     }
     function closeModal(modalElement) {
@@ -113,7 +113,17 @@ function setupQrCodeModal() {
     const qrCodeModal = document.getElementById('qrCodeModal');
     const closeQrModal = document.getElementById('closeQrModal');
     const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const qrCodModalContent = document.querySelector('#qrCodeModal .modal-content');
+    function showModal(modalElement) {
+        const targetRect = qrCodeButton.getBoundingClientRect();
+        const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
+        qrCodModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
+        modalElement.style.display = 'block';
+    }
+    function closeModal(modalElement) {
+        modalElement.style.display = 'none';
+    }
     qrCodeButton.addEventListener('click', () => {
         qrCodeContainer.innerHTML = '';
         new QRCode(qrCodeContainer, {
@@ -121,10 +131,10 @@ function setupQrCodeModal() {
             width: 150,
             height: 150
         });
-        qrCodeModal.style.display = 'block';
+        showModal(qrCodeModal)
     });
 
-    closeQrModal.addEventListener('click', () => qrCodeModal.style.display = 'none');
+    closeQrModal.addEventListener('click', () => closeModal(qrCodeModal));
 
     window.addEventListener('click', (event) => {
         if (event.target === qrCodeModal) {
