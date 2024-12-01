@@ -71,6 +71,7 @@ function setupFontModal() {
     const fontModal = document.getElementById('fontModal');
     const closeFontModal = document.getElementById('closeFontModal');
     const postBody = document.querySelector('.post-body.entry-content');
+    const fontModalContent = document.querySelector('#fontModal .modal-content');
 
     function adjustFontSize(size) {
         if (size === 'small') {
@@ -82,9 +83,18 @@ function setupFontModal() {
         }
         fontModal.style.display = 'none';
     }
+    function showModal(modalElement) {
+        const targetRect = settingsButton.getBoundingClientRect();
+        const targetRight = targetRect.right;  // 目标元素的右边缘位置
+        fontModalContent.style.left = `${targetRight}px`;  // 将 fixed 元素的左侧设置为目标元素右侧
+        modalElement.style.display = 'block';
+    }
+    function closeModal(modalElement) {
+        modalElement.style.display = 'none';
+    }
 
-    settingsButton.addEventListener('click', () => fontModal.style.display = 'block');
-    closeFontModal.addEventListener('click', () => fontModal.style.display = 'none');
+    settingsButton.addEventListener('click', () => showModal(fontModal));
+    closeFontModal.addEventListener('click', () => closeModal(fontModal));
 
     document.getElementById('fontSmall').addEventListener('click', () => adjustFontSize('small'));
     document.getElementById('fontMedium').addEventListener('click', () => adjustFontSize('medium'));
