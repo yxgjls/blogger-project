@@ -65,7 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     window.addEventListener('scroll', highlightSection);
 });
-
+function isSmallScreen1280() {
+    return window.matchMedia('(max-width: 1280px)').matches;
+}
 function setupFontModal() {
     const settingsButton = document.getElementById('settingsButton');
     const fontModal = document.getElementById('fontModal');
@@ -88,10 +90,18 @@ function setupFontModal() {
         const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
         fontModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
-        modalElement.style.display = 'block';
+        if (isSmallScreen1280) {
+            modalElement.style.visibility = 'visible';
+        } else {
+            modalElement.style.display = 'block';
+        }
     }
     function closeModal(modalElement) {
-        modalElement.style.display = 'none';
+        if (isSmallScreen1280) {
+            modalElement.style.visibility = 'hidden';
+        } else {
+            modalElement.style.display = 'none';
+        }
     }
 
     settingsButton.addEventListener('click', () => showModal(fontModal));
@@ -104,6 +114,11 @@ function setupFontModal() {
     window.addEventListener('click', (event) => {
         if (event.target === fontModal) {
             fontModal.style.display = 'none';
+            if (isSmallScreen1280) {
+                fontModal.style.visibility = 'hidden';
+            } else {
+                fontModal.style.display = 'none';
+            }
         }
     });
 }
@@ -119,10 +134,18 @@ function setupQrCodeModal() {
         const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
         qrCodModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
-        modalElement.style.display = 'block';
+        if (isSmallScreen1280) {
+            modalElement.style.visibility = 'visible';
+        } else {
+            modalElement.style.display = 'block';
+        }
     }
     function closeModal(modalElement) {
-        modalElement.style.display = 'none';
+        if (isSmallScreen1280) {
+            modalElement.style.visibility = 'hidden';
+        } else {
+            modalElement.style.display = 'none';
+        }
     }
     qrCodeButton.addEventListener('click', () => {
         qrCodeContainer.innerHTML = '';
@@ -138,7 +161,12 @@ function setupQrCodeModal() {
 
     window.addEventListener('click', (event) => {
         if (event.target === qrCodeModal) {
-            qrCodeModal.style.display = 'none';
+            //qrCodeModal.style.display = 'none';
+            if (isSmallScreen1280) {
+                qrCodeModal.style.visibility = 'hidden';
+            } else {
+                qrCodeModal.style.display = 'none';
+            }
         }
     });
 }
