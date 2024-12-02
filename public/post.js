@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     window.addEventListener('scroll', highlightSection);
 });
-function isSmallScreen1280() {
-    return window.matchMedia('(max-width: 1280px)').matches;
+function isSmallScreen1024() {
+    return window.matchMedia('(max-width: 1024px)').matches;
 }
 function setupFontModal() {
     const settingsButton = document.getElementById('settingsButton');
@@ -90,14 +90,14 @@ function setupFontModal() {
         const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
         fontModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
-        if (isSmallScreen1280) {
+        if (isSmallScreen1024) {
             modalElement.style.visibility = 'visible';
         } else {
             modalElement.style.display = 'block';
         }
     }
     function closeModal(modalElement) {
-        if (isSmallScreen1280) {
+        if (isSmallScreen1024) {
             modalElement.style.visibility = 'hidden';
             fontModalContent.style.right = '-100%';
         } else {
@@ -114,7 +114,7 @@ function setupFontModal() {
 
     window.addEventListener('click', (event) => {
         if (event.target === fontModal) {
-            if (isSmallScreen1280) {
+            if (isSmallScreen1024) {
                 fontModal.style.visibility = 'hidden';
                 fontModalContent.style.right = '-100%';
             } else {
@@ -135,14 +135,14 @@ function setupQrCodeModal() {
         const targetLeft = targetRect.left;  // 目标元素的左边缘位置
 
         qrCodModalContent.style.right = `${window.innerWidth - targetLeft}px`;  // 计算与目标元素左侧的距离
-        if (isSmallScreen1280) {
+        if (isSmallScreen1024) {
             modalElement.style.visibility = 'visible';
         } else {
             modalElement.style.display = 'block';
         }
     }
     function closeModal(modalElement) {
-        if (isSmallScreen1280) {
+        if (isSmallScreen1024) {
             modalElement.style.visibility = 'hidden';
             qrCodModalContent.style.right = '-100%';
         } else {
@@ -164,7 +164,7 @@ function setupQrCodeModal() {
     window.addEventListener('click', (event) => {
         if (event.target === qrCodeModal) {
             //qrCodeModal.style.display = 'none';
-            if (isSmallScreen1280) {
+            if (isSmallScreen1024) {
                 qrCodeModal.style.visibility = 'hidden';
                 qrCodModalContent.style.right = '-100%';
             } else {
@@ -179,3 +179,23 @@ document.addEventListener('DOMContentLoaded', function () {
     setupQrCodeModal();
 
 });
+document.addEventListener('DOMContentLoaded', function () {
+    let isSmallScreen1024 = window.matchMedia('(max-width: 1024px)').matches;
+    function reSet1024(event) {
+        if (event.matches && !isSmallScreen1024) {
+            // 切换到小屏幕
+            isSmallScreen1024 = true;
+        } else if (!event.matches && isSmallScreen1024) {
+            // 切换到大屏幕  
+            document.getElementById('qrCodeModal').removeAttribute('style');
+            document.getElementById('fontModal').removeAttribute('style');
+            document.querySelector('#fontModal .modal-content').removeAttribute('style');
+            document.querySelector('#qrCodeModal .modal-content').removeAttribute('style');
+            isSmallScreen1024 = false;
+        }
+    }
+    // 设置媒体查询
+    const mediaQuery1024 = window.matchMedia('(max-width: 1024px)');
+    // 添加监听器
+    mediaQuery1024.addEventListener('change', reSet1024);
+}); 
