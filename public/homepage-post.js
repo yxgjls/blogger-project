@@ -29,7 +29,8 @@ function fetchData() {
 function handleData(data) {
     const categories = {};
     const entries = data.feed.entry || [];
-    const currentPageUrl = window.location.href;
+    const currentPageUrl = new URL(window.location.href).origin + new URL(window.location.href).pathname;
+
     const blogPosts = [];
     let currentPrefix = null;
     let currentNumber = null;
@@ -198,11 +199,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             postLink.href = post.url;
             postLink.textContent = post.title;
 
-            if (new URL(post.url).pathname === new URL(currentPageUrl).pathname) {
-                console.log(post.url);
-                console.log(currentPageUrl);
-                console.log(new URL(post.url).pathname);
-                console.log(new URL(currentPageUrl).pathname);
+            if (post.url === currentPageUrl) {
                 postLink.id = 'active';
                 expandParentElements(postLi);
             }
@@ -223,15 +220,13 @@ function containsCurrentUrl(category, currentPageUrl) {
 
 // 展开父级元素
 function expandParentElements(element) {
-    console.log(element);
-    console.log(element.parentElement);
     if (element.parentElement && element.parentElement.tagName === 'UL') {
         element.parentElement.style.display = 'block';
         const parentLi = element.parentElement.parentElement;
         if (parentLi && parentLi.querySelector('span')) {
             parentLi.querySelector('span').textContent = '\u25BC\u00A0 ';
         }
-        console.log(parentLi);
+
         expandParentElements(parentLi);
     }
 }
