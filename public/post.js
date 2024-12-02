@@ -99,6 +99,7 @@ function setupFontModal() {
     function closeModal(modalElement) {
         if (isSmallScreen1280) {
             modalElement.style.visibility = 'hidden';
+            fontModalContent.style.right = '-100%';
         } else {
             modalElement.style.display = 'none';
         }
@@ -113,9 +114,9 @@ function setupFontModal() {
 
     window.addEventListener('click', (event) => {
         if (event.target === fontModal) {
-            fontModal.style.display = 'none';
             if (isSmallScreen1280) {
                 fontModal.style.visibility = 'hidden';
+                fontModalContent.style.right = '-100%';
             } else {
                 fontModal.style.display = 'none';
             }
@@ -143,6 +144,7 @@ function setupQrCodeModal() {
     function closeModal(modalElement) {
         if (isSmallScreen1280) {
             modalElement.style.visibility = 'hidden';
+            qrCodModalContent.style.right = '-100%';
         } else {
             modalElement.style.display = 'none';
         }
@@ -164,6 +166,7 @@ function setupQrCodeModal() {
             //qrCodeModal.style.display = 'none';
             if (isSmallScreen1280) {
                 qrCodeModal.style.visibility = 'hidden';
+                qrCodModalContent.style.right = '-100%';
             } else {
                 qrCodeModal.style.display = 'none';
             }
