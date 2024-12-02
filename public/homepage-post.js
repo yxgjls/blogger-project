@@ -198,7 +198,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
             postLink.href = post.url;
             postLink.textContent = post.title;
 
-            if (post.url === currentPageUrl) {
+            if (new URL(post.url).pathname === new URL(currentPageUrl).pathname) {
                 postLink.id = 'active';
                 expandParentElements(postLi);
             }
