@@ -180,18 +180,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 document.addEventListener('DOMContentLoaded', function () {
-    let isSmallScreen1024 = window.matchMedia('(max-width: 1024px)').matches;
     function reSet1024(event) {
-        if (event.matches && !isSmallScreen1024) {
-            // 切换到小屏幕
-            isSmallScreen1024 = true;
-        } else if (!event.matches && isSmallScreen1024) {
-            // 切换到大屏幕  
+        if (event.matches) {
             document.getElementById('qrCodeModal').removeAttribute('style');
             document.getElementById('fontModal').removeAttribute('style');
             document.querySelector('#fontModal .modal-content').removeAttribute('style');
             document.querySelector('#qrCodeModal .modal-content').removeAttribute('style');
-            isSmallScreen1024 = false;
         }
     }
     // 设置媒体查询
