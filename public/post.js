@@ -180,14 +180,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 document.addEventListener('DOMContentLoaded', function () {
-    function reSet1024() {
+    let isSmallScreen1024 = window.matchMedia('(max-width: 1024px)').matches;
+    function reSet1024(event) {
         document.getElementById('qrCodeModal').removeAttribute('style');
         document.getElementById('fontModal').removeAttribute('style');
         document.querySelector('#fontModal .modal-content').removeAttribute('style');
         document.querySelector('#qrCodeModal .modal-content').removeAttribute('style');
+        if (event.matches && !isSmallScreen1024) {
+            // 切换到小屏幕
+            isSmallScreen1024 = true;
+        } else if (!event.matches && isSmallScreen1024) {
+            // 切换到大屏幕  
+            document.querySelector('.right-index').removeAttribute('style');
+            document.querySelector('main .main-right').removeAttribute('style');
+            if (document.getElementById('tocButton').classList.contains('active')) {
+                document.getElementById('tocButton').classList.toggle('active');
+            }
+
+            isSmallScreen1024 = false;
+        }
     }
     // 设置媒体查询
     const mediaQuery1024 = window.matchMedia('(max-width: 1024px)');
     // 添加监听器
     mediaQuery1024.addEventListener('change', reSet1024);
+});
+document.addEventListener('DOMContentLoaded', function () {
+    // 获取元素引用
+    const menuButton = document.getElementById('tocButton');
+    const menuButtonclose = document.getElementById('toc-menu-close');
+    const menuLeft = document.querySelector('main .main-right');
+    const menuSection = document.querySelector('.right-index');
+
+
+
+    // 添加点击事件监听器&#65306;菜单按钮
+    menuButton.addEventListener('click', function (event) {
+        event.preventDefault(); // 阻止默认行为&#65288;防止链接跳转&#65289;
+
+        // 判断是否已有 active 类&#65292;执行相应的菜单开关操作
+        if (menuButton.classList.contains('active')) {
+            menuOff(); // 如果有 active 类&#65292;则关闭菜单
+        } else {
+            menuOn();  // 如果没有 active 类&#65292;则打开菜单
+        }
+    });
+
+    // 添加点击事件监听器&#65306;关闭菜单按钮
+    menuButtonclose.addEventListener('click', function (event) {
+        menuOff(); // 关闭菜单
+    });
+
+    // 打开菜单的操作
+    function menuOn() {
+        menuButton.classList.toggle('active');  // 切换按钮的 active 状态
+        menuLeft.style.visibility = 'visible';  // 设置菜单可见
+        menuSection.style.right = '1rem';  // 菜单滑入屏幕
+    }
+
+    // 关闭菜单的操作
+    function menuOff() {
+        menuButton.classList.toggle('active');  // 切换按钮的 active 状态
+        menuLeft.style.visibility = 'hidden';  // 隐藏菜单
+        menuSection.style.right = '-100%';  // 菜单滑出屏幕
+    }
+
+    // 监听点击事件&#65292;若点击区域是 menuLeft&#65292;关闭菜单
+    window.addEventListener('click', (event) => {
+        console.log(event.target);
+        if (event.target === menuLeft) {
+            // 如果点击的是菜单区域本身&#65292;则关闭菜单
+            menuButton.classList.toggle('active');  // 切换按钮的 active 状态
+            menuLeft.style.visibility = 'hidden';  // 隐藏菜单
+            menuSection.style.right = '-100%';  // 菜单滑出屏幕
+        }
+    });
 }); 
