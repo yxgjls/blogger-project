@@ -180,13 +180,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 document.addEventListener('DOMContentLoaded', function () {
-    function reSet1024(event) {
-        if (event.matches) {
-            document.getElementById('qrCodeModal').removeAttribute('style');
-            document.getElementById('fontModal').removeAttribute('style');
-            document.querySelector('#fontModal .modal-content').removeAttribute('style');
-            document.querySelector('#qrCodeModal .modal-content').removeAttribute('style');
-        }
+    function reSet1024() {
+        document.getElementById('qrCodeModal').removeAttribute('style');
+        document.getElementById('fontModal').removeAttribute('style');
+        document.querySelector('#fontModal .modal-content').removeAttribute('style');
+        document.querySelector('#qrCodeModal .modal-content').removeAttribute('style');
     }
     // 设置媒体查询
     const mediaQuery1024 = window.matchMedia('(max-width: 1024px)');
