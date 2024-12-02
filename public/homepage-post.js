@@ -205,9 +205,6 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
                 console.log(new URL(currentPageUrl).pathname);
                 postLink.id = 'active';
                 expandParentElements(postLi);
-            } else {
-                console.log(post.url);
-                console.log(currentPageUrl);
             }
 
             postLi.appendChild(postLink);
@@ -226,13 +223,15 @@ function containsCurrentUrl(category, currentPageUrl) {
 
 // 展开父级元素
 function expandParentElements(element) {
+    console.log(element);
+    console.log(element.parentElement);
     if (element.parentElement && element.parentElement.tagName === 'UL') {
         element.parentElement.style.display = 'block';
         const parentLi = element.parentElement.parentElement;
         if (parentLi && parentLi.querySelector('span')) {
             parentLi.querySelector('span').textContent = '\u25BC\u00A0 ';
         }
-
+        console.log(parentLi);
         expandParentElements(parentLi);
     }
 }
