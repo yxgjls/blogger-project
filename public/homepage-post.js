@@ -169,7 +169,7 @@ function generateCategoryList(categories, currentPageUrl, parentElement = docume
         if (containsCurrentUrl(categories[category], currentPageUrl)) {
             if (isSmallScreen()) {
                 sublist.style.display = 'block';
-                arrowSpan.textContent = 'fa-solid fa-angle-up fa-fw';
+                iconElement.className = 'fa-solid fa-angle-up fa-fw';
             } else {
                 sublist.style.display = 'block';
                 arrowSpan.textContent = '\u25BC\u00A0 ';
