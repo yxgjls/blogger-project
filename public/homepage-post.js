@@ -78,13 +78,16 @@ function handleData(data) {
         .sort((a, b) => a.number - b.number);
 
     generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber);
-    parentElements = document.querySelectorAll('[id="category-list"]');
+    const parentElements = document.querySelectorAll('[id="category-list"]');
     parentElements.forEach(parentElement => {
         generateCategoryList(categories, currentPageUrl, parentElement);
     });
 
     //generateCategoryList(categories, currentPageUrl);
-    document.getElementById('temp-load').style.display = 'none';
+    //document.getElementById('temp-load').style.display = 'none';
+    document.querySelectorAll('[id="temp-load"]').forEach(Element => {
+        Element.style.display = 'none';
+    });
 }
 
 function generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber) {
@@ -248,19 +251,33 @@ function isSmallScreen() {
 
 document.addEventListener('DOMContentLoaded', function () {
     let isSmallScreen = window.matchMedia('(max-width: 1280px)').matches;
-    const container = document.getElementById('category-list');
+    //const container = document.getElementById('category-list');
+    const containers = document.querySelectorAll('[id="category-list"]');
+
 
     function handleScreenWidthChange(event) {
         if (event.matches && !isSmallScreen) {
             // 切换到小屏幕
-            container.replaceChildren();
-            document.getElementById('temp-load').style.display = 'block';
+            containers.forEach(Element => {
+                Element.replaceChildren();
+            });
+            document.querySelectorAll('[id="temp-load"]').forEach(Element => {
+                Element.style.display = 'block';
+            });
+            //container.replaceChildren();
+            //document.getElementById('temp-load').style.display = 'block';
             fetchData();
             isSmallScreen = true;
         } else if (!event.matches && isSmallScreen) {
             // 切换到大屏幕
-            container.replaceChildren();
-            document.getElementById('temp-load').style.display = 'block';
+            containers.forEach(Element => {
+                Element.replaceChildren();
+            });
+            document.querySelectorAll('[id="temp-load"]').forEach(Element => {
+                Element.style.display = 'block';
+            });
+            //container.replaceChildren();
+            //document.getElementById('temp-load').style.display = 'block';
             fetchData();
             isSmallScreen = false;
         }
