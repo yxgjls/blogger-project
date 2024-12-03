@@ -7,7 +7,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // 创建包含文本的数组
 const texts = [
     '日常打卡更新中&#8230;&#8230;<br/>英语系列更新中&#8230;&#8230;<br/>翻译系列更新中&#8230;&#8230;',
-  ];
+];
 
 /**
  * 获取博客基本信息
@@ -27,7 +27,7 @@ async function fetchBlogInfo() {
         document.getElementById('last-update-time').textContent = times.updateTime;
 
         //运行时间
-        document.getElementById('blog-run-time').textContent = times.runTime; 
+        document.getElementById('blog-run-time').textContent = times.runTime;
 
         document.getElementById('temp-load2').style.display = 'none';
     } catch (error) {
@@ -166,5 +166,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 显示统计结果
     document.getElementById('total-count').textContent = stats.totalCount;
-    document.getElementById('temp-load2').style.display = 'none';
+    //document.getElementById('temp-load2').style.display = 'none';
+    setTimeout(() => {
+        document.getElementById('temp-load2').style.display = 'none';
+    }, 1000); // 延迟 3000 毫秒（即 3 秒）
+
 });
