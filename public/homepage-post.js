@@ -78,7 +78,12 @@ function handleData(data) {
         .sort((a, b) => a.number - b.number);
 
     generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber);
-    generateCategoryList(categories, currentPageUrl);
+    parentElements = document.querySelectorAll('[id="category-list"]');
+    parentElements.forEach(parentElement => {
+        generateCategoryList(categories, currentPageUrl, parentElement);
+    });
+
+    //generateCategoryList(categories, currentPageUrl);
     document.getElementById('temp-load').style.display = 'none';
 }
 
@@ -114,7 +119,7 @@ function generateNavigationButtons(filteredPosts, currentPageUrl, currentNumber)
     }
 }
 
-function generateCategoryList(categories, currentPageUrl, parentElement = document.getElementById('category-list')) {
+function generateCategoryList(categories, currentPageUrl, parentElement) {
     for (const category in categories) {
         if (category === '_posts' || category === '_postCount') continue;
 
