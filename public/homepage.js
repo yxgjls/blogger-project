@@ -167,8 +167,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 显示统计结果
     document.getElementById('total-count').textContent = stats.totalCount;
     //document.getElementById('temp-load2').style.display = 'none';
-    setTimeout(() => {
-        document.getElementById('temp-load2').style.display = 'none';
-    }, 1000); // 延迟 3000 毫秒（即 3 秒）
 
 });
