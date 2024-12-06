@@ -77,13 +77,13 @@ function setupFontModal() {
 
     function adjustFontSize(size) {
         if (size === 'small') {
-            postBody.style.fontSize = '0.9em';
+            postBody.style.fontSize = '18px';
         } else if (size === 'medium') {
-            postBody.style.fontSize = '1em';
+            postBody.style.fontSize = '20px';
         } else if (size === 'large') {
-            postBody.style.fontSize = '1.1em';
+            postBody.style.fontSize = '22px';
         }
-        fontModal.style.display = 'none';
+        closeModal(fontModal);
     }
     function showModal(modalElement) {
         const targetRect = settingsButton.getBoundingClientRect();
