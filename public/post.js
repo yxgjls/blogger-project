@@ -247,8 +247,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 监听点击事件&#65292;若点击区域是 menuLeft&#65292;关闭菜单
     window.addEventListener('click', (event) => {
-        console.log(event.target);
-        if (event.target === menuLeft) {
+        //console.log(event.target);
+        if (event.target === menuLeft || event.target.id === 'Level1' || event.target.id === 'Level2' || event.target.id === 'Level3') {
             // 如果点击的是菜单区域本身&#65292;则关闭菜单
             menuButton.classList.toggle('active');  // 切换按钮的 active 状态
             menuLeft.style.visibility = 'hidden';  // 隐藏菜单

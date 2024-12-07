@@ -1,7 +1,7 @@
 fetch('https://blogger-project-vert.vercel.app/api?type=info')
     .then(response => response.json())
     .then(data => {
-        console.log(data); // 在前端处理数据
+        //console.log(data); // 在前端处理数据
     })
     .catch(error => console.error('Error:', error));
 
@@ -361,14 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // 定义点击事件的逻辑
         function toggleMenu() {
             // 监听内容变化并重新设置 max-height
-            console.log('监听');
+            //console.log('监听');
             const observer = new MutationObserver(() => {
                 if (menu.classList.contains('active')) {
                     menu.style.maxHeight = menu.scrollHeight + 'px';
-                    console.log('监听更改');
+                    //console.log('监听更改');
                 }
                 else {
-                    console.log('监听未更改');
+                    //console.log('监听未更改');
                 }
             });
 
