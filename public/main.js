@@ -207,54 +207,104 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    // 获取元素引用
-    const menuButton = document.getElementById('icon-menu-a');
-    const menuButtonclose = document.getElementById('menu-close');
-    const menuLeft = document.querySelector('main .main-left');
-    const menuSection = document.getElementById('main-leftsection');
+    // 定义一个函数，当屏幕宽度小于等于1280时执行
+    function initMenu() {
+        // 获取元素引用
+        const menuButton = document.getElementById('icon-menu-a');
+        const menuButtonclose = document.getElementById('menu-close');
+        const menuLeft = document.querySelector('main .main-left');
+        const menuSection = document.getElementById('main-leftsection');
 
+        // 添加点击事件监听器：菜单按钮
+        menuButton.addEventListener('click', handleMenuButtonClick);
 
-    // 添加点击事件监听器&#65306;菜单按钮
-    menuButton.addEventListener('click', function (event) {
-        event.preventDefault(); // 阻止默认行为&#65288;防止链接跳转&#65289;
+        // 添加点击事件监听器：关闭菜单按钮
+        menuButtonclose.addEventListener('click', handleCloseMenuClick);
 
-        // 判断是否已有 active 类&#65292;执行相应的菜单开关操作
-        if (menuButton.classList.contains('active')) {
-            menuOff(); // 如果有 active 类&#65292;则关闭菜单
-        } else {
-            menuOn();  // 如果没有 active 类&#65292;则打开菜单
+        // 打开菜单的操作
+        function menuOn() {
+            menuButton.classList.toggle('active');  // 切换按钮的 active 状态
+            menuLeft.style.visibility = 'visible';  // 设置菜单可见
+            menuSection.style.left = '1rem';  // 菜单滑入屏幕
         }
-    });
 
-    // 添加点击事件监听器&#65306;关闭菜单按钮
-    menuButtonclose.addEventListener('click', function (event) {
-        menuOff(); // 关闭菜单
-    });
-
-    // 打开菜单的操作
-    function menuOn() {
-        menuButton.classList.toggle('active');  // 切换按钮的 active 状态
-        menuLeft.style.visibility = 'visible';  // 设置菜单可见
-        menuSection.style.left = '1rem';  // 菜单滑入屏幕
-    }
-
-    // 关闭菜单的操作
-    function menuOff() {
-        menuButton.classList.toggle('active');  // 切换按钮的 active 状态
-        menuLeft.style.visibility = 'hidden';  // 隐藏菜单
-        menuSection.style.left = '-100%';  // 菜单滑出屏幕
-    }
-
-    // 监听点击事件&#65292;若点击区域是 menuLeft&#65292;关闭菜单
-    window.addEventListener('click', (event) => {
-        if (event.target === menuLeft) {
-            // 如果点击的是菜单区域本身&#65292;则关闭菜单
+        // 关闭菜单的操作
+        function menuOff() {
             menuButton.classList.toggle('active');  // 切换按钮的 active 状态
             menuLeft.style.visibility = 'hidden';  // 隐藏菜单
             menuSection.style.left = '-100%';  // 菜单滑出屏幕
         }
-    });
+
+        // 监听点击事件，若点击区域是 menuLeft，则关闭菜单
+        window.addEventListener('click', handleWindowClick);
+
+        // 菜单按钮的点击事件处理函数
+        function handleMenuButtonClick(event) {
+            event.preventDefault(); // 阻止默认行为（防止链接跳转）
+
+            // 判断是否已有 active 类，执行相应的菜单开关操作
+            if (menuButton.classList.contains('active')) {
+                menuOff(); // 如果有 active 类，则关闭菜单
+            } else {
+                menuOn();  // 如果没有 active 类，则打开菜单
+            }
+        }
+
+        // 关闭菜单按钮的点击事件处理函数
+        function handleCloseMenuClick(event) {
+            menuOff(); // 关闭菜单
+        }
+
+        // 窗口点击事件处理函数
+        function handleWindowClick(event) {
+            if (event.target === menuLeft) {
+                // 如果点击的是菜单区域本身，则关闭菜单
+                menuButton.classList.toggle('active');  // 切换按钮的 active 状态
+                menuLeft.style.visibility = 'hidden';  // 隐藏菜单
+                menuSection.style.left = '-100%';  // 菜单滑出屏幕
+            }
+        }
+
+        // 解除监听器的函数
+        function removeEventListeners() {
+            menuButton.removeEventListener('click', handleMenuButtonClick);
+            menuButtonclose.removeEventListener('click', handleCloseMenuClick);
+            window.removeEventListener('click', handleWindowClick);
+        }
+
+        // 返回解除事件监听器的方法
+        return removeEventListeners;
+    }
+
+    // 使用 matchMedia 检测屏幕宽度
+    const mediaQuery = window.matchMedia('(max-width: 1280px)');
+
+    // 定义媒体查询匹配时的回调函数
+    function handleMediaQueryChange(event) {
+        if (event.matches) {
+            // 屏幕宽度小于等于1280时初始化菜单
+            if (!removeListeners) {
+                removeListeners = initMenu();
+            }
+        } else {
+            // 屏幕宽度大于1280时解除事件监听
+            if (removeListeners) {
+                removeListeners();
+                removeListeners = null;
+            }
+        }
+    }
+
+    // 在页面加载时初始化菜单
+    let removeListeners = null;
+
+    // 初始化时立即检查屏幕宽度
+    handleMediaQueryChange(mediaQuery);
+
+    // 监听媒体查询变化
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
 });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     let isSmallScreen1280 = window.matchMedia('(max-width: 1280px)').matches;
