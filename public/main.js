@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 创建 Font Awesome 图标元素
         const iconElement = document.createElement("i");
-        iconElement.classList.add("fa", "fa-bar-chart");
+        iconElement.classList.add("fa-solid", "fa-chart-column");
         iconElement.setAttribute("aria-hidden", "true"); // 保持无障碍兼容性
 
         // 将字数和图标添加到同一个容器中
